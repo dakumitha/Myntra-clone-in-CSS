@@ -40,23 +40,27 @@ api.interceptors.response.use(
     }
 );
 
-export const uploadDocument = async (formData) => {
+export const uploadDocuments = async (formDataArray) => {
     const cancelToken = axios.CancelToken.source();
     try {
-        const response = await api.post('/upload-document', formData, {
-            cancelToken: cancelToken.token
+        const response = await api.post('/upload-documents', { documents: formDataArray }, {
+            cancelToken: cancelToken.token,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
         return response.data;
     } catch (error) {
         if (axios.isCancel(error)) {
             console.log('Request cancelled');
         } else {
-            console.error("Error uploading document:", error);
+            console.error("Error uploading documents:", error);
             throw error;
         }
     }
     return () => cancelToken.cancel();
 };
+
 
 export const getDocuments = async () => {
     const cancelToken = axios.CancelToken.source();

@@ -15,21 +15,37 @@ import { getDocuments } from './services/api';
 import './App.css';
 
 const Navigation = () => (
-  <nav className="app-nav">
-    <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/upload-document">Upload Document</Link></li>
-      <li><Link to="/analyze-document">Analyze Document</Link></li>
-      <li><Link to="/generate-notice">Generate Notice</Link></li>
-      <li><Link to="/notices">Notices</Link></li>
-      <li><Link to="/upload-reply">Upload Reply</Link></li>
-      <li><Link to="/replies">Replies</Link></li>
-      <li><Link to="/add-reminder">Add Reminder</Link></li>
-      <li><Link to="/reminders">Reminders</Link></li>
-      <li><Link to="/time-barring">Set Time Barring</Link></li>
-      <li><Link to="/case-details">Case Details</Link></li>
-      <li><Link to="/assessment-suggestions">Assessment Suggestions</Link></li>
-    </ul>
+  <nav className="bg-white shadow-lg fixed w-full z-50">
+    <div className="max-w-7xl mx-auto px-4">
+      <div className="flex justify-between items-center h-16">
+        <div className="flex-shrink-0">
+          <Link to="/" className="text-2xl font-bold text-indigo-600">LegalTech</Link>
+        </div>
+        <div className="hidden lg:block">
+          <div className="ml-4 flex items-center space-x-2">
+            <Link to="/upload-document" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Upload Document</Link>
+            <Link to="/analyze-document" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Analyze Document</Link>
+            <Link to="/generate-notice" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Generate Notice</Link>
+            <Link to="/notices" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Notices</Link>
+            <Link to="/upload-reply" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Upload Reply</Link>
+            <Link to="/replies" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Replies</Link>
+            <Link to="/add-reminder" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Add Reminder</Link>
+            <Link to="/reminders" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Reminders</Link>
+            <Link to="/time-barring" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Time Barring</Link>
+            <Link to="/case-details" className="text-gray-600 hover:text-indigo-600 px-2 py-2 rounded-md text-sm font-medium transition-colors">Case Details</Link>
+            <Link to="/assessment-suggestions" className="bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">Assessment</Link>
+          </div>
+        </div>
+        {/* Mobile menu button */}
+        <div className="lg:hidden">
+          <button className="p-2 rounded-md text-gray-600 hover:text-indigo-600 focus:outline-none">
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
   </nav>
 );
 
@@ -49,19 +65,39 @@ function App() {
                 setLoading(false);
             }
         };
+
         fetchDocuments();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return (
+        <div className="flex justify-center items-center h-screen">
+            <div className="text-xl text-indigo-600">Loading...</div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="flex justify-center items-center h-screen">
+            <div className="text-xl text-red-600">Error: {error}</div>
+        </div>
+    );
 
     return (
         <Router>
-            <div className="app-container">
+            <div className="min-h-screen bg-gray-50">
                 <Navigation />
-                <div className="app-content">
+                <div className="pt-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <Routes>
-                        <Route path="/" element={<h1>Welcome to the Legal App</h1>} />
+                        <Route path="/" element={
+                            <div className="text-center">
+                                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                                    <span className="block">Welcome to</span>
+                                    <span className="block text-indigo-600">Legal Document Management</span>
+                                </h1>
+                                <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+                                    Streamline your legal document processing with AI-powered analysis and case management.
+                                </p>
+                            </div>
+                        } />
                         <Route path="/upload-document" element={<DocumentUpload />} />
                         <Route path="/analyze-document" element={<DocumentAnalyzer documents={documents} />} />
                         <Route path="/generate-notice" element={<NoticeForm />} />

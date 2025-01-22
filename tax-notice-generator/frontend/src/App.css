@@ -1,0 +1,24 @@
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-nav {
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.app-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.app-nav li {
+  margin-bottom: 10px;
+}
+
+.app-content {
+  flex: 1;
+  padding: 20px;
+}
